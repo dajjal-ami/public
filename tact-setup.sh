@@ -137,4 +137,4 @@ fi
 
 # Build project
 log "Building project..."
-npm run build && npm run start
+npm run build && NODE_ENV=production </dev/tty npm run start
