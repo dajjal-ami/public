@@ -39,11 +39,6 @@ fi
 
 REPO_URL=$1
 
-# Check internet connectivity
-if ! ping -c 1 8.8.8.8 &> /dev/null; then
-    error "No internet connection detected"
-fi
-
 # Check and install git if needed
 if ! command -v git &> /dev/null; then
     log "Git not found. Installing git..."
