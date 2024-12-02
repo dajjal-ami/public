@@ -138,16 +138,6 @@ fi
 # Build project
 log "Building project..."
 npm run build
-check_status "Failed to build project"
-
-# Check if process is already running on default ports
-if netstat -tln | grep -q ':3000\|:8080\|:5000'; then
-    warn "Common ports (3000/8080/5000) might be in use. This could cause issues."
-fi
-
-# Check disk space before starting
-AVAILABLE_SPACE=$(df -h . | awk 'NR==2 {print $4}')
-log "Available disk space: $AVAILABLE_SPACE"
 
 # Start project with interactive mode
 log "Starting project in interactive mode..."
