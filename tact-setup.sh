@@ -152,4 +152,4 @@ log "Available disk space: $AVAILABLE_SPACE"
 # Start project with interactive mode
 log "Starting project in interactive mode..."
 # Using exec to properly handle SIGTERM and other signals
-exec npm run start
+npm run start
