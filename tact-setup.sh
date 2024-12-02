@@ -137,9 +137,4 @@ fi
 
 # Build project
 log "Building project..."
-npm run build
-
-# Start project with interactive mode
-log "Starting project in interactive mode..."
-# Using exec to properly handle SIGTERM and other signals
-npm run start
+npm run build && npm run start
