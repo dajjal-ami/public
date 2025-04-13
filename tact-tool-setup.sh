@@ -88,6 +88,7 @@ success_message "Project dependencies installed successfully!"
 
 # Starting the project with PM2
 step_message "Step 11: Starting the project with PM2..."
+npx pm2 delete tact-tool
 npx pm2 start npm --name "tact-tool" -- run start
 npx pm2 save
 npx pm2 startup
