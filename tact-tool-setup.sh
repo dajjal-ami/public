@@ -56,12 +56,12 @@ sudo apt update > /dev/null 2>&1
 sudo apt install git -y > /dev/null 2>&1
 success_message "Git installed successfully!"
 
-# Cloning the repository
-step_message "Step 2: Cloning the repository from $giturl..."
-git clone "$giturl" tact_tool > /dev/null 2>&1
-cd tact_tool
+random_suffix=$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 5)
+folder_name="tact_tool_${random_suffix}"
+git clone "$giturl" "$folder_name"
+cd "$folder_name"
 if [ $? -eq 0 ]; then
-  success_message "Repository cloned successfully!"
+  success_message "Repository cloned successfully! $folder_name"
 else
   error_message "Error cloning the repository. Check the URL."
   exit 1
