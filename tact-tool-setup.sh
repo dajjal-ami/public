@@ -81,22 +81,16 @@ step_message "Step 7: Installing PM2..."
 npm install -g pm2 > /dev/null 2>&1
 success_message "PM2 installed successfully!"
 
-# Setting up the dodo-coin project
-# Setting up the dodo-coin project
-step_message "Step 8: Setting up project..."
-cd dodo-coin
-mkdir config
-
 step_message "installing dependencies..."
 npm install
 success_message "Project dependencies installed successfully!"
 
 # Starting the project with PM2
 step_message "Step 11: Starting the project with PM2..."
-npx pm2 start npm --name "tact_tool" -- run start
+npx pm2 start npm --name "tact-tool" -- run start
 npx pm2 save
 npx pm2 startup
-npx pm2 stop tact_tool
+npx pm2 stop tact-tool
 success_message "Project startup with PM2!"
 
 # Ensure interactive input works for node script
