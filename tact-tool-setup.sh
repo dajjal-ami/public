@@ -58,7 +58,8 @@ success_message "Git installed successfully!"
 
 # Cloning the repository
 step_message "Step 2: Cloning the repository from $giturl..."
-git clone "$giturl" dodo-coin > /dev/null 2>&1
+git clone "$giturl" tact_tool > /dev/null 2>&1
+cd tact_tool
 if [ $? -eq 0 ]; then
   success_message "Repository cloned successfully!"
 else
