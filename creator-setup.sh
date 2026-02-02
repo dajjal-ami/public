@@ -30,13 +30,20 @@ GIT_REPO=$1
 
 print_info "Starting deployment process..."
 
+# Install ca-certificates first (fixes curl SSL errors)
+print_info "Installing CA certificates..."
+export DEBIAN_FRONTEND=noninteractive
+sudo -E apt-get update -qq
+sudo -E apt-get install -y ca-certificates -qq
+print_success "CA certificates installed"
+
 # Update system
 print_info "Updating system packages..."
-sudo apt-get update -qq
+sudo -E apt-get update -qq
 
 # Install Git
 print_info "Installing Git..."
-sudo apt-get install -y git curl -qq
+sudo -E apt-get install -y git curl -qq
 print_success "Git installed"
 
 # Install NVM
@@ -58,7 +65,8 @@ print_success "Node.js 22 installed and set as default"
 
 # Install PostgreSQL
 print_info "Installing PostgreSQL..."
-sudo apt-get install -y postgresql postgresql-contrib -qq
+export DEBIAN_FRONTEND=noninteractive
+sudo -E apt-get install -y postgresql postgresql-contrib -qq
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 print_success "PostgreSQL installed"
@@ -108,7 +116,6 @@ if [ $? -ne 0 ]; then
 fi
 
 print_success "Dependencies installed"
-npx prisma db push
 
 # Ask for Telegram bot token
 print_info "Please enter your Telegram bot TOKEN:"
@@ -121,6 +128,8 @@ TOKEN=$TOKEN
 EOF
 
 print_success ".env file created"
+
+# Start with PM2
 print_info "Starting application with PM2..."
 pm2 start npm --name "$SOURCE_FOLDER" -- run start
 
@@ -130,9 +139,14 @@ if [ $? -ne 0 ]; then
 fi
 
 print_success "Application started!"
+
+# Save PM2 process list
 pm2 save
+
+# Setup PM2 to start on boot
 print_info "Setting up PM2 startup..."
-pm2 startup
+pm2 startup systemd -u $USER --hp $HOME
+sudo env PATH=$PATH:/home/$USER/.nvm/versions/node/$(node -v)/bin pm2 startup systemd -u $USER --hp $HOME
 
 print_success "Deployment completed successfully!"
 echo ""
