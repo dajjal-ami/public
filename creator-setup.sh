@@ -116,7 +116,9 @@ if [ $? -ne 0 ]; then
 fi
 
 print_success "Dependencies installed"
+print_success "Prisma DB PUSH..."
 npx prisma db push
+print_success "Prisma DB PUSH... End"
 # Ask for Telegram bot token
 print_info "Please enter your Telegram bot TOKEN:"
 read -r TOKEN < /dev/tty
