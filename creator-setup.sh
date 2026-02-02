@@ -119,7 +119,7 @@ print_success "Dependencies installed"
 
 # Ask for Telegram bot token
 print_info "Please enter your Telegram bot TOKEN:"
-read -r TOKEN
+read -r TOKEN < /dev/tty
 
 # Create .env file
 print_info "Creating .env file..."
